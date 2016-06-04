@@ -30,7 +30,7 @@ function drawMountainRange(height){
     ctx.closePath();
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'blue';
-    var grd=ctx.createLinearGradient(0,0,0,height*canvas.height*2);
+    var grd=ctx.createLinearGradient(0,0,0,canvas.height * height + .5 * canvas.height);
     grd.addColorStop(1,'black');
     grd.addColorStop(0,'#aaaaaa');
 
