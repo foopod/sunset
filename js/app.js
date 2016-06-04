@@ -76,9 +76,9 @@ function drawMountainRange(height){
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
 //        console.log(perlin.noise(i/0,0,0));
-        ctx.lineTo(i,perlin.noise(i/400,averageHeight*canvas.height,0)*0.20*canvas.height + averageHeight*canvas.height);
+        ctx.lineTo(i,perlin.noise(i/400,averageHeight*canvas.height,0)*0.15*canvas.height + averageHeight*canvas.height);
     }
-    ctx.lineTo(i,perlin.noise(canvas.width/400,averageHeight*canvas.height,0)*0.20*canvas.height + averageHeight*canvas.height);
+    ctx.lineTo(i,perlin.noise(canvas.width/400,averageHeight*canvas.height,0)*0.15*canvas.height + averageHeight*canvas.height);
     ctx.lineTo(canvas.width, canvas.height);
     
 
