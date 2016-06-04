@@ -8,7 +8,7 @@ function generateRandomRed(){
     if(h > 50){
         h+=350
     }
-    s = Math.random()/3 + .3;
+    s = Math.random()/4 + .3;
     v = 1;
     console.log("red "+h + "," + s + "," + v);
     return hsv2rgb(h,s,v);
@@ -16,7 +16,7 @@ function generateRandomRed(){
 
 function generateRandomBlue(){
     var h = (Math.random()*60 + 210);
-    s = Math.random()/2 + .3;
+    s = Math.random()/4 + .3;
     v = 1;
     console.log("blue "+h + "," + s + "," + v);
     return hsv2rgb(h,s,v);

@@ -9,7 +9,7 @@ function init(){
     resizeCanvas();
     drawGradient();
     drawClouds();
-    drawMountainRange(0.55);
+    drawMountainRange(0.5);
     drawMountainRange(0.6);
     drawMountainRange(0.8);
     
@@ -97,7 +97,7 @@ function drawMountainRange(height){
 function drawGradient(){
     var grd=ctx.createLinearGradient(0,0,0,canvas.width);
     grd.addColorStop(0,generateRandomRed());
-    grd.addColorStop(0.5,generateRandomBlue());
+    grd.addColorStop(0.4,generateRandomBlue());
 
     ctx.fillStyle=grd;
     ctx.fillRect(0,0,canvas.width,canvas.height);
