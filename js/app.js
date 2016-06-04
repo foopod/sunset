@@ -10,7 +10,7 @@ function init(){
     drawGradient();
     drawMountainRange(0.55);
     drawMountainRange(0.6);
-    drawMountainRange(0.7);
+    drawMountainRange(0.9);
 }
 
 function drawMountainRange(height){
@@ -30,9 +30,9 @@ function drawMountainRange(height){
     ctx.closePath();
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'blue';
-    var grd=ctx.createLinearGradient(0,0,0,canvas.width);
-    grd.addColorStop(height-.1,'black');
-    grd.addColorStop(0,'#636363');
+    var grd=ctx.createLinearGradient(0,0,0,height*canvas.height*2);
+    grd.addColorStop(1,'black');
+    grd.addColorStop(0,'#aaaaaa');
 
     ctx.fillStyle=grd;
     ctx.fill();
