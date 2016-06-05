@@ -13,7 +13,7 @@ function gameLoop() {
     // Do stuff.
     drawGradient(red, blue);
     drawSun(sunColor,sunSeed);
-    drawClouds(count);
+//    drawClouds(count);
     drawMountainRange(0.5,fluctuation,count);
     drawMountainRange(0.6,fluctuation,count*2);
     drawMountainRange(0.8,fluctuation,count*3);
@@ -79,7 +79,7 @@ function drawClouds(step){
 }
 
 function drawMountainRange(height, fluctuation, step){
-    var numberOfPoints = canvas.width/2;
+    var numberOfPoints = canvas.width/5;
     var terrainFluctation = fluctuation;
     
     ctx.beginPath();
