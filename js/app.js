@@ -91,7 +91,7 @@ function drawSun(){
     var x = canvas.width * Math.random();
     var y = canvas.height * Math.random();
     
-    var r = 100 * Math.random() + 200;
+    var r = 100 * Math.random() + canvas.width/5;
     
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
