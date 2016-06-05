@@ -89,9 +89,9 @@ function drawGradient(){
 
 function drawSun(){
     var x = canvas.width * Math.random();
-    var y = canvas.height * Math.random();
+    var y = canvas.height*0.6* Math.random() + canvas.height * 0.1;
     
-    var r = 100 * Math.random() + canvas.width/5;
+    var r = 100 * Math.random() + canvas.width/10;
     
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
