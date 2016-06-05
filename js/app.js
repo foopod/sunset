@@ -36,13 +36,7 @@ function init(){
     sunX = canvas.width * Math.random();
     sunY = canvas.height*0.6* Math.random(); + canvas.height * 0.1;
     sunR = 100 * Math.random() + canvas.width/10;
-    
-    
-     var dataURL = canvas.toDataURL();
 
-      // set canvasImg image src to dataURL
-      // so it can be saved as an image
-      document.getElementById('canvasImg').src = dataURL;
     
 
     //Start gameloop
