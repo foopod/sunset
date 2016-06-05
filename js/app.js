@@ -53,7 +53,7 @@ function drawClouds(){
 
 function drawMountainRange(height){
     var numberOfPoints = canvas.width;
-    var terrainFluctation = Math.random() * 0.3 +  0.05;
+    var terrainFluctation = Math.random() * 0.3 +  0.05* canvas.width/1000;
     
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
