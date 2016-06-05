@@ -13,10 +13,9 @@ var sunY;
 var sunR;
 
 function gameLoop() {
-    // Do stuff.
     drawGradient(red, blue);
     drawSun(sunColor, sunX, sunY, sunR);
-//    drawClouds(count);
+//    drawClouds(count); //Lags out
     drawMountainRange(0.5,fluctuation,count);
     drawMountainRange(0.6,fluctuation,count*2);
     drawMountainRange(0.8,fluctuation,count*3);
@@ -36,8 +35,6 @@ function init(){
     sunX = canvas.width * Math.random();
     sunY = canvas.height*0.6* Math.random(); + canvas.height * 0.1;
     sunR = 100 * Math.random() + canvas.width/10;
-
-    
 
     //Start gameloop
     setInterval(gameLoop, 33); // 33 milliseconds = ~ 30 frames per sec
