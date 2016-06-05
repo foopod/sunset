@@ -18,9 +18,9 @@ function gameLoop() {
 //    drawClouds(count); //Lags out
     drawMountainRange(0.5,fluctuation,count);
     drawMountainRange(0.6,fluctuation,count*2);
-    drawMountainRange(0.8,fluctuation,count*3);
+    drawMountainRange(0.8,fluctuation,count*5);
     
-    count+=1;
+    count+=0.7;
 }
 
 function init(){
