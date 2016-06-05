@@ -8,11 +8,14 @@ var red;
 var blue;
 var sunColor;
 var sunSeed;
+var sunX;
+var sunY;
+var sunR;
 
 function gameLoop() {
     // Do stuff.
     drawGradient(red, blue);
-    drawSun(sunColor,sunSeed);
+    drawSun(sunColor, sunX, sunY, sunR);
 //    drawClouds(count);
     drawMountainRange(0.5,fluctuation,count);
     drawMountainRange(0.6,fluctuation,count*2);
@@ -24,14 +27,17 @@ function gameLoop() {
 function init(){
     canvas = document.getElementById('sunset');
 	ctx = canvas.getContext('2d');
-    
+    resizeCanvas();
     fluctuation = Math.random() * 0.3 +  0.05* canvas.width/1000;
     red = generateRandomRed();
     blue = generateRandomBlue();
     sunSeed = Math.random();
     sunColor = generateRandomRed();
+    sunX = canvas.width * Math.random();
+    sunY = canvas.height*0.6* Math.random(); + canvas.height * 0.1;
+    sunR = 100 * Math.random() + canvas.width/10;
     
-    resizeCanvas();
+    
     
     
 
@@ -114,11 +120,7 @@ function drawGradient(red, blue){
     
 }
 
-function drawSun(colour,seed){
-    var x = canvas.width * perlin.noise(seed,0,0);
-    var y = canvas.height*0.6* perlin.noise(seed+1,0,0) + canvas.height * 0.1;
-    
-    var r = 100 * perlin.noise(seed+2,0,0) + canvas.width/10;
+function drawSun(colour, x,y,r){
     
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
