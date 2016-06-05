@@ -8,11 +8,12 @@ function init(){
     
     resizeCanvas();
     drawGradient();
+    drawSun();
     drawClouds();
     drawMountainRange(0.5);
     drawMountainRange(0.6);
     drawMountainRange(0.8);
-    
+
 }
 
 function drawClouds(){
@@ -47,38 +48,19 @@ function drawClouds(){
 
     // ctx the temporary gradient canvas on the visible canvas
     ctx.drawImage(canvas2,0,0, canvas.width, canvas.height/1.5);
-    
-    
-//    
-//    var image = ctx.createImageData(canvas.width, canvas.height*0.3);
-//    var data = image.data;
-//    for (var x = 0; x < canvas.width; x++) {
-//      for (var y = 0; y < canvas.height*0.3; y++) {
-//        var value = Math.abs(perlin.noise(x / 300, y/300,0));
-//        value = Math.floor(value * 256);
-//        var cell = (x + y * canvas.width) * 4;
-//        data[cell] = data[cell + 1] = data[cell + 2] = 255;
-//        data[cell + 3] = 0; // alpha.
-//      }
-//    }
-//    
-//    ctx.fillColor = 'black';
-//    ctx.fillRect(0, 0, 100, 100);
-//    ctx.putImageData(image, 0, 0);
 
 }
 
 function drawMountainRange(height){
-    var averageHeight =height;
     var numberOfPoints = canvas.width;
+    var terrainFluctation = Math.random() * 0.3 +  0.05;
     
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-//        console.log(perlin.noise(i/0,0,0));
-        ctx.lineTo(i,perlin.noise(i/400,averageHeight*canvas.height,0)*0.15*canvas.height + averageHeight*canvas.height);
+        ctx.lineTo(i,perlin.noise(i/400,height*canvas.height,0)*terrainFluctation*canvas.height + height*canvas.height);
     }
-    ctx.lineTo(i,perlin.noise(canvas.width/400,averageHeight*canvas.height,0)*0.15*canvas.height + averageHeight*canvas.height);
+    ctx.lineTo(i,perlin.noise(canvas.width/400,height*canvas.height,0)*terrainFluctation*canvas.height+height*canvas.height);
     ctx.lineTo(canvas.width, canvas.height);
     
 
@@ -103,4 +85,16 @@ function drawGradient(){
     ctx.fillStyle=grd;
     ctx.fillRect(0,0,canvas.width,canvas.height);
     
+}
+
+function drawSun(){
+    var x = canvas.width * Math.random();
+    var y = canvas.height * Math.random();
+    
+    var r = 100 * Math.random() + 200;
+    
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+    ctx.fillStyle = generateRandomRed();
+    ctx.fill();
 }
