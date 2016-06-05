@@ -10,7 +10,7 @@ function generateRandomRed(){
     }
     s = Math.random()/4 + .3;
     v = 1;
-    console.log("red "+h + "," + s + "," + v);
+//    console.log("red "+h + "," + s + "," + v);
     return hsv2rgb(h,s,v);
 }
 
@@ -18,7 +18,7 @@ function generateRandomBlue(){
     var h = (Math.random()*60 + 210);
     s = Math.random()/4 + .3;
     v = 1;
-    console.log("blue "+h + "," + s + "," + v);
+//    console.log("blue "+h + "," + s + "," + v);
     return hsv2rgb(h,s,v);
 }
 

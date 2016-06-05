@@ -1,22 +1,49 @@
 var ctx;
 var canvas;
 var perlin = new ClassicalNoise(Math);
+var count = 0;
+
+var fluctuation;
+var red;
+var blue;
+var sunColor;
+var sunSeed;
+
+function gameLoop() {
+    // Do stuff.
+    drawGradient(red, blue);
+    drawSun(sunColor,sunSeed);
+    drawClouds(count);
+    drawMountainRange(0.5,fluctuation,count);
+    drawMountainRange(0.6,fluctuation,count*2);
+    drawMountainRange(0.8,fluctuation,count*3);
+    
+    count+=1;
+}
 
 function init(){
     canvas = document.getElementById('sunset');
 	ctx = canvas.getContext('2d');
     
+    fluctuation = Math.random() * 0.3 +  0.05* canvas.width/1000;
+    red = generateRandomRed();
+    blue = generateRandomBlue();
+    sunSeed = Math.random();
+    sunColor = generateRandomRed();
+    
     resizeCanvas();
-    drawGradient();
-    drawSun();
-    drawClouds();
-    drawMountainRange(0.5);
-    drawMountainRange(0.6);
-    drawMountainRange(0.8);
+    
+    
 
+    //Start gameloop
+    setInterval(gameLoop, 33); // 33 milliseconds = ~ 30 frames per sec
 }
 
-function drawClouds(){
+
+
+
+
+function drawClouds(step){
     var cloudCover = .3;    
     
 // create a temporary canvas to hold the gradient overlay
@@ -28,7 +55,7 @@ function drawClouds(){
     // make gradient using ImageData
     var imgData = ctx2.getImageData(0,0,canvas.width,canvas.height);
     var data=imgData.data;
-    var val = Math.random() * 60 + 190;
+    var val = 1 * 60 + 190;
     for(var y=0; y<canvas.height; y++) {
         for(var x=0; x<canvas.width; x++) {
             var n=((canvas.width*y)+x)*4;
@@ -36,7 +63,7 @@ function drawClouds(){
             data[n]=val;
             data[n+1]=val;
             data[n+2]=val;
-            data[n+3]=125* perlin.noise(x / 200, y/200,0);
+            data[n+3]=125* perlin.noise(x / 200+step/51, y/200,0);
             if(y>cloudCover*canvas.height){
                 data[n+3]=data[n+3]-(y-cloudCover*canvas.height)/2;
             }
@@ -51,16 +78,16 @@ function drawClouds(){
 
 }
 
-function drawMountainRange(height){
-    var numberOfPoints = canvas.width;
-    var terrainFluctation = Math.random() * 0.3 +  0.05* canvas.width/1000;
+function drawMountainRange(height, fluctuation, step){
+    var numberOfPoints = canvas.width/2;
+    var terrainFluctation = fluctuation;
     
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,perlin.noise(i/400,height*canvas.height,0)*terrainFluctation*canvas.height + height*canvas.height);
+        ctx.lineTo(i,perlin.noise((i+step)/400,height*canvas.height,0)*terrainFluctation*canvas.height + height*canvas.height);
     }
-    ctx.lineTo(i,perlin.noise(canvas.width/400,height*canvas.height,0)*terrainFluctation*canvas.height+height*canvas.height);
+    ctx.lineTo(i,perlin.noise((i+step+1)/400,height*canvas.height,0)*terrainFluctation*canvas.height+height*canvas.height);
     ctx.lineTo(canvas.width, canvas.height);
     
 
@@ -77,24 +104,24 @@ function drawMountainRange(height){
     ctx.fill();
 }
 
-function drawGradient(){
+function drawGradient(red, blue){
     var grd=ctx.createLinearGradient(0,0,0,canvas.width);
-    grd.addColorStop(0,generateRandomRed());
-    grd.addColorStop(0.4,generateRandomBlue());
+    grd.addColorStop(0,red);
+    grd.addColorStop(0.4,blue);
 
     ctx.fillStyle=grd;
     ctx.fillRect(0,0,canvas.width,canvas.height);
     
 }
 
-function drawSun(){
-    var x = canvas.width * Math.random();
-    var y = canvas.height*0.6* Math.random() + canvas.height * 0.1;
+function drawSun(colour,seed){
+    var x = canvas.width * perlin.noise(seed,0,0);
+    var y = canvas.height*0.6* perlin.noise(seed+1,0,0) + canvas.height * 0.1;
     
-    var r = 100 * Math.random() + canvas.width/10;
+    var r = 100 * perlin.noise(seed+2,0,0) + canvas.width/10;
     
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI, false);
-    ctx.fillStyle = generateRandomRed();
+    ctx.fillStyle = colour;
     ctx.fill();
 }
