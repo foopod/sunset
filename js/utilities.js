@@ -56,3 +56,32 @@ var hsv2rgb = function(h, s, v) {
     return ("0" + Math.round(x*255).toString(16)).slice(-2);
   }).join('');
 };
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function hexFade(hex, percentage){
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+//    console.log(componentToHex(Math.floor(parseInt(result[3], 16) * percentage)));
+//    console.log(percentage);
+    if(percentage>1){
+        percentage = 1
+    }
+    percentage = 1-percentage;
+    return "#" + componentToHex(Math.floor(parseInt(result[1], 16) * percentage)) + componentToHex(Math.floor(parseInt(result[2], 16) * percentage)) + componentToHex(Math.floor(parseInt(result[3], 16) * percentage));
+}

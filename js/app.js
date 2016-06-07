@@ -19,8 +19,14 @@ function gameLoop() {
     drawMountainRange(0.5,fluctuation,count);
     drawMountainRange(0.6,fluctuation,count*2);
     drawMountainRange(0.8,fluctuation,count*5);
+    if(sunY<canvas.height+sunR){
+        sunY+=0.2;
+    }
+    if(sunY/canvas.height>1){
+        init();
+    }
     
-    count+=0.7;
+    count+=0.4;
 }
 
 function init(){
@@ -33,9 +39,15 @@ function init(){
     sunSeed = Math.random();
     sunColor = generateRandomRed();
     sunX = canvas.width * Math.random();
-    sunY = canvas.height*0.6* Math.random(); + canvas.height * 0.1;
     sunR = 100 * Math.random() + canvas.width/10;
+    sunY = 0;
+    count = 0;
 
+    
+}
+
+function start(){
+    init();
     //Start gameloop
     setInterval(gameLoop, 33); // 33 milliseconds = ~ 30 frames per sec
 }
@@ -96,19 +108,18 @@ function drawMountainRange(height, fluctuation, step){
     ctx.closePath();
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'blue';
-    var grd=ctx.createLinearGradient(0,0,0,canvas.height * (1-height) + .5 * canvas.height);
-    grd.addColorStop(1,'#000000');
-    grd.addColorStop(0.5,'#454545');
-    grd.addColorStop(0,'#aaaaaa');
-
+    var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
+    grd.addColorStop(0,'#000000');
+    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
+    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
     ctx.fillStyle=grd;
     ctx.fill();
 }
 
 function drawGradient(red, blue){
     var grd=ctx.createLinearGradient(0,0,0,canvas.width);
-    grd.addColorStop(0,red);
-    grd.addColorStop(0.4,blue);
+    grd.addColorStop(0,hexFade(red, (sunY)/canvas.height));
+    grd.addColorStop(0.4,hexFade(blue, (sunY)/canvas.height+0.1));
 
     ctx.fillStyle=grd;
     ctx.fillRect(0,0,canvas.width,canvas.height);
