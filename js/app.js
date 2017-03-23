@@ -13,13 +13,19 @@ var sunY;
 var sunR;
 
 var rangeHeights;
+var mountainColor;
 
 function gameLoop() {
     drawGradient(red, blue);
     drawSun(sunColor, sunX, sunY, sunR);
 //    drawClouds(count); //Lags out
     for(var i = 0; i < rangeHeights.length; i++){
+        if( i != 2 && i != 5){
         drawMountainRange(rangeHeights[i],fluctuation,count*(i+2));
+        } else {
+            drawTreeRange(rangeHeights[i],fluctuation,count*(i+2));
+            drawTreeRange(rangeHeights[i]+0.03,fluctuation,count*(i+2)-10);
+         }
     }
 //    drawMountainRange(0.5,fluctuation,count);
 //    drawMountainRange(0.6,fluctuation,count*2);
@@ -47,10 +53,12 @@ function init(){
     sunR = 100 * Math.random() + canvas.width/10;
     sunY = 0;
     count = 0;
+    mountainColor = "#555555";
+    mountainColor = red;
     
     rangeHeights = [];
-    for( var i = 0; i < 5; i++){
-        rangeHeights.push(0.9 - (5-i)/15);
+    for( var i = 0; i < 7; i++){
+        rangeHeights.push(0.9 - (7-i)/20);
     }
     
 }
@@ -118,7 +126,34 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
     ctx.lineWidth = 1;
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
-    grd.addColorStop(0,shadeColor2(red, (1/height-0.3)-1));
+    grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.3)-1));
+    console.log((height*2)-.7);
+    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
+//    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
+    ctx.fillStyle=grd;
+    ctx.fill();
+}
+
+function drawTreeRange(height, fluctuation, step){
+    var numberOfPoints = canvas.width;
+    var terrainFluctation = 0.1;
+    
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height);
+    for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
+        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*2 + Math.abs(10 - (i+step)%20) * 5 + height*canvas.height*1);
+    }
+
+
+ctx.lineTo(i,perlin.noise((i+step+1)/20,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
+    ctx.lineTo(canvas.width, canvas.height);
+
+    // complete custom shape
+    ctx.closePath();
+    ctx.lineWidth = 1;
+//    ctx.strokeStyle = 'blue';
+    var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
+    grd.addColorStop(0,blendColors(shadeColor2(mountainColor, (1/height-0.3)-1),shadeColor2("#001100", (1/height-0.3)-1), 0.2));
     console.log((height*2)-.7);
     var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
 //    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
@@ -129,6 +164,11 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
 function shadeColor2(color, percent) {   
     var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+}
+
+function blendColors(c0, c1, p) {
+    var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+    return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
 }
 
 function octavePerlin(x, y, z, octaves, persistence) {
