@@ -50,6 +50,7 @@ function init(){
     blue = generateRandomBlue();
     sunSeed = Math.random();
     sunColor = generateRandomRed();
+    sunColor = blendColors("#FFFFFF", red, 0.5)
     sunX = canvas.width * Math.random();
     sunR = 100 * Math.random() + canvas.width/10;
     sunY = 0;
