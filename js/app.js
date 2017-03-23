@@ -38,7 +38,7 @@ function gameLoop() {
         init();
     }
     
-    count+=0.4;
+    count+=0.1;
 }
 
 function init(){
