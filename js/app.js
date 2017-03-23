@@ -60,7 +60,7 @@ function init(){
     
     rangeHeights = [];
     for( var i = 0; i < 7; i++){
-        rangeHeights.push(0.9 - (7-i)/20);
+        rangeHeights.push(0.9 - (7-i)/30);
     }
     
 }
@@ -117,7 +117,7 @@ function drawMountainRange(height, fluctuation, step){
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height,10, 5, .5)*terrainFluctation*canvas.height*2 + height*canvas.height);
+        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height,10, 5, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height);
     }
 
 ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
