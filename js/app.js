@@ -23,9 +23,9 @@ function gameLoop() {
     for(var i = 0; i < rangeHeights.length; i++){
         if( i%3 == 0){
             if( i  == 3){
-                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.2);
+                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.3);
             } else {
-                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.1);
+                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.2);
             }
         } else if (i%3 == 1){
             drawTreeRange(rangeHeights[i],fluctuation,count*(i+2));
@@ -126,7 +126,7 @@ function drawMountainRange(height, fluctuation, step, fluctuation){
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height,10, 5, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height);
+        ctx.lineTo(i,octavePerlin((i+step)/500,height*canvas.height,10, 8, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height);
     }
 
 ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
