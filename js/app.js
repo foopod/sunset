@@ -21,11 +21,20 @@ function gameLoop() {
     drawSun(sunColor, sunX, sunY, sunR);
 //    drawClouds(count); //Lags out
     for(var i = 0; i < rangeHeights.length; i++){
-        if( i != 2 && i != 5){
-        drawMountainRange(rangeHeights[i],fluctuation,count*(i+2));
-        } else {
+        if( i%3 == 0){
+            if( i  == 3){
+                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.2);
+            } else {
+                drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.1);
+            }
+        } else if (i%3 == 1){
             drawTreeRange(rangeHeights[i],fluctuation,count*(i+2));
-            drawTreeRange(rangeHeights[i]+0.03  ,fluctuation,count*(i+3)-12);
+            
+            drawLowClouds(rangeHeights[i],fluctuation,count*(i+2));
+            drawMountainRange(rangeHeights[i]+0.01,fluctuation,count*(i+2), 0.2);
+            drawTreeRange(rangeHeights[i]+0.03,fluctuation,count*(i+3)-12);
+         } else {
+             drawLowClouds(rangeHeights[i],fluctuation,count*(i+2));
          }
     }
 //    drawMountainRange(0.5,fluctuation,count);
@@ -110,9 +119,9 @@ function drawClouds(step){
 
 }
 
-function drawMountainRange(height, fluctuation, step){
+function drawMountainRange(height, fluctuation, step, fluctuation){
     var numberOfPoints = canvas.width;
-    var terrainFluctation = 0.1;
+    var terrainFluctation = fluctuation;
     
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
@@ -130,7 +139,33 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
     grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.5)-1));
     console.log((height*2)-.7);
-    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
+//    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
+//    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
+    ctx.fillStyle=grd;
+    ctx.fill();
+}
+
+function drawLowClouds(height, fluctuation, step){
+    var numberOfPoints = canvas.width;
+    var terrainFluctation = 0.05;
+    
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height);
+    for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
+        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height,10, 1, .5)*terrainFluctation*canvas.height*2.5*height+ Math.abs(Math.sin((i+step)/20))*10 * -1 + height*canvas.height*1.05);
+    }
+
+ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
+    ctx.lineTo(canvas.width, canvas.height);
+
+    // complete custom shape
+    ctx.closePath();
+    ctx.lineWidth = 1;
+//    ctx.strokeStyle = 'blue';
+    var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
+    grd.addColorStop(0,blendColors(shadeColor2(mountainColor, (1/height-0.3)-1),shadeColor2("#FFFFFF", (1/height-0.3)-1), 0.2));
+    console.log((height*2)-.7);
+//    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
 //    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
     ctx.fillStyle=grd;
     ctx.fill();
