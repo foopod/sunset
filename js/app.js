@@ -119,16 +119,16 @@ function drawClouds(step){
 
 }
 
-function drawMountainRange(height, fluctuation, step, fluctuation){
+function drawMountainRange(height, fluctuation, step, Tfluctuation){
     var numberOfPoints = canvas.width;
-    var terrainFluctation = fluctuation;
+    var terrainFluctation = Tfluctuation;
     
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
+    
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,octavePerlin((i+step)/500,height*canvas.height,10, 8, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height);
+        ctx.lineTo(i,octavePerlin((i+step)/500,height*canvas.height,10, 7, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height);
     }
-
 ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
     ctx.lineTo(canvas.width, canvas.height);
 
@@ -138,9 +138,42 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
     grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.5)-1));
-    console.log((height*2)-.7);
+//    console.log((height*2)-.7);
 //    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
 //    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
+    ctx.fillStyle=grd;
+    ctx.fill();
+    drawMountainShadow(height, fluctuation, step, Tfluctuation);
+}
+
+function drawMountainShadow(height, fluctuation, step, Tfluctuation){
+    var numberOfPoints = canvas.width;
+    var terrainFluctation = Tfluctuation;
+    
+    
+    
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height);
+    var p = Math.abs((perlin.noise(fluctuation,height*canvas.height,10)+1)/10);
+    console.log(p);
+    for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
+        var offset = (sunX - i)/canvas.width;
+//    console.log(offset);
+        var diff = offset + p;
+        ctx.lineTo(i,octavePerlin((i+step+offset)/500,height*canvas.height,10, 7, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height + Math.abs((200*diff) -(step+i)%400*diff)*2);
+    }
+ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
+    ctx.lineTo(canvas.width, canvas.height);
+
+    // complete custom shape
+    ctx.closePath();
+    ctx.lineWidth = 1;
+//    ctx.strokeStyle = 'blue';
+    var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
+    grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.56)-1));
+//    console.log((height*2)-.7);
+    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
+    grd.addColorStop(1,shadeColor2(mountainColor, (1/height-0.51)-1));
     ctx.fillStyle=grd;
     ctx.fill();
 }
@@ -164,7 +197,7 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
     grd.addColorStop(0,blendColors(shadeColor2(mountainColor, (1/height-0.3)-1),shadeColor2("#FFFFFF", (1/height-0.3)-1), 0.2));
-    console.log((height*2)-.7);
+//    console.log((height*2)-.7);
 //    var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
 //    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
     ctx.fillStyle=grd;
@@ -190,8 +223,8 @@ ctx.lineTo(i,perlin.noise((i+step+1)/20,height*canvas.height,10)*terrainFluctati
     ctx.lineWidth = 1;
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
-    grd.addColorStop(0,blendColors(shadeColor2(mountainColor, (1/height-0.3)-1),shadeColor2("#001100", (1/height-0.3)-1), 0.2));
-    console.log((height*2)-.7);
+    grd.addColorStop(0,blendColors(shadeColor2(mountainColor, (1/height-0.3)-1),shadeColor2("#002200", (1/height-0.3)-1), 0.2));
+//    console.log((height*2)-.7);
     var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
 //    grd.addColorStop(1, "".concat('rgb(',grdColor,',',grdColor,',',grdColor,')'));
     ctx.fillStyle=grd;
