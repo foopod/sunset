@@ -173,7 +173,7 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
     grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.56)-1));
 //    console.log((height*2)-.7);
     var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
-    grd.addColorStop(1,shadeColor2(mountainColor, (1/height-0.51)-1));
+    grd.addColorStop(1,shadeColor2(mountainColor, (1/height-0.505)-1));
     ctx.fillStyle=grd;
     ctx.fill();
 }
