@@ -160,7 +160,7 @@ function drawMountainShadow(height, fluctuation, step, Tfluctuation){
         var offset = (sunX - i)/canvas.width;
 //    console.log(offset);
         var diff = offset + p;
-        ctx.lineTo(i,octavePerlin((i+step+offset)/500,height*canvas.height,10, 7, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height + Math.abs((200*diff) -(step+i)%400*diff)*2);
+        ctx.lineTo(i,octavePerlin((i+step+offset+height*1000)/500,height*canvas.height,10, 7, .5)*terrainFluctation*canvas.height*2.5*height + height*canvas.height + Math.abs((200*diff) -(step+i)%400*diff)*2);
     }
 ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctation*canvas.height+height*canvas.height);
     ctx.lineTo(canvas.width, canvas.height);
