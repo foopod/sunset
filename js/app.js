@@ -170,7 +170,7 @@ ctx.lineTo(i,perlin.noise((i+step+1)/200,height*canvas.height,10)*terrainFluctat
     ctx.lineWidth = 1;
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
-    grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.54)-1));
+    grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.53)-1));
 //    console.log((height*2)-.7);
     var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
     grd.addColorStop(1,shadeColor2(mountainColor, (1/height-0.505)-1));
