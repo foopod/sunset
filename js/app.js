@@ -150,7 +150,7 @@ function drawTreeRange(height, fluctuation, step){
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
         var sawtooth = Math.abs(12 - (i+step)%24);
-        if(sawtooth <= 1 || sawtooth >= 11){
+        if(sawtooth <= 1 || sawtooth >= 11 || i <=5 || i >= canvas.width-5){
             ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*4*flexHeight + Math.abs(12 - (i+step)%24) * 6*flexHeight + height*canvas.height*1.04);
         }
     }
