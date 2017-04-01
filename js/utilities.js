@@ -14,14 +14,6 @@ function generateRandomRed(){
     return hsv2rgb(h,s,v);
 }
 
-function generateRandomBlue(){
-    var h = (Math.random()*60 + 210);
-    s = Math.random()/4 + .3;
-    v = 1;
-//    console.log("blue "+h + "," + s + "," + v);
-    return hsv2rgb(h,s,v);
-}
-
 var hsv2rgb = function(h, s, v) {
   // adapted from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
   var rgb, i, data = [];
@@ -57,31 +49,12 @@ var hsv2rgb = function(h, s, v) {
   }).join('');
 };
 
-function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+function shadeColor2(color, percent) {   
+    var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+    return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
 }
 
-function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
-function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
-}
-
-function hexFade(hex, percentage){
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-//    console.log(componentToHex(Math.floor(parseInt(result[3], 16) * percentage)));
-//    console.log(percentage);
-    if(percentage>1){
-        percentage = 1
-    }
-    percentage = 1-percentage;
-    return "#" + componentToHex(Math.floor(parseInt(result[1], 16) * percentage)) + componentToHex(Math.floor(parseInt(result[2], 16) * percentage)) + componentToHex(Math.floor(parseInt(result[3], 16) * percentage));
+function blendColors(c0, c1, p) {
+    var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+    return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
 }
