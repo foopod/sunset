@@ -1,6 +1,6 @@
 function resizeCanvas(e) {
-	canvas.width = document.body.clientWidth*2;
-	canvas.height = document.body.clientHeight*2;
+	canvas.width = document.body.clientWidth*1;
+	canvas.height = document.body.clientHeight*1;
     canvas.style.width = document.body.clientWidth;
     canvas.style.height = document.body.clientHeight;
 }
