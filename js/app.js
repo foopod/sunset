@@ -21,7 +21,6 @@ function gameLoop() {
     drawGradient(red, blendColors("#FFFFFF", red, 0.5));
     drawSun(sunColor, sunX, sunY, sunR);
     for(var i = 0; i < rangeHeights.length; i++){
-        console.log(rangeHeights[i]);
         if( i%3 == 0){
             if( i  == 3){
                 drawMountainRange(rangeHeights[i],fluctuation,count*(i+2), 0.3);
@@ -115,7 +114,6 @@ function drawMountainShadow(height, fluctuation, step, Tfluctuation){
 //    ctx.strokeStyle = 'blue';
     var grd=ctx.createLinearGradient(0,canvas.height*height,0,canvas.height);
     grd.addColorStop(0,shadeColor2(mountainColor, (1/height-0.53)-1));
-//    console.log((height*2)-.7);
     var grdColor  = 160-(Math.floor(255*sunY/canvas.height));
     grd.addColorStop(1,shadeColor2(mountainColor, (1/height-0.505)-1));
     ctx.fillStyle=grd;
@@ -151,7 +149,10 @@ function drawTreeRange(height, fluctuation, step){
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*4*flexHeight + Math.abs(12 - (i+step)%24) * 6*flexHeight + height*canvas.height*1.04);
+        var sawtooth = Math.abs(12 - (i+step)%24);
+        if(sawtooth <= 1 || sawtooth >= 11){
+            ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*4*flexHeight + Math.abs(12 - (i+step)%24) * 6*flexHeight + height*canvas.height*1.04);
+        }
     }
 
     ctx.lineTo(canvas.width, canvas.height);
