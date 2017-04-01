@@ -30,12 +30,13 @@ function gameLoop() {
             }
         } else if (i%3 == 1){
             drawTreeRange(rangeHeights[i],fluctuation,count*(i+2));
-            
+           
             drawLowClouds(rangeHeights[i],fluctuation,count*(i+2));
             drawMountainRange(rangeHeights[i]+0.01,fluctuation,count*(i+2), 0.2);
+            drawTreeRange(rangeHeights[i]+0.05,fluctuation,count*(i+3)-6);
             drawTreeRange(rangeHeights[i]+0.03,fluctuation,count*(i+3)-12);
          } else {
-             drawLowClouds(rangeHeights[i],fluctuation,count*(i+2));
+            drawLowClouds(rangeHeights[i],fluctuation,count*(i+2));
          }
     }
     count+=0.1;
@@ -150,7 +151,7 @@ function drawTreeRange(height, fluctuation, step){
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
     for(var i = 0; i <= canvas.width; i+=canvas.width/numberOfPoints){
-        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*4*flexHeight + Math.abs(10 - (i+step)%20) * 5 + height*canvas.height*1.05);
+        ctx.lineTo(i,octavePerlin((i+step)/200,height*canvas.height*10,1, 10, 0.5)*terrainFluctation*canvas.height*4*flexHeight + Math.abs(12 - (i+step)%24) * 6*flexHeight + height*canvas.height*1.04);
     }
 
     ctx.lineTo(canvas.width, canvas.height);
